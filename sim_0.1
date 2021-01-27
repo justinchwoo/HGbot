@@ -1,0 +1,169 @@
+import discord
+import random
+#from discord.ext import commands
+
+#client = commands.Bot(command_prefix = '`') #` is the command
+
+
+#def encounter(Player):
+#    print(random.choice(encounter)):
+
+#@client.event #denoting function represents an event
+#async def on_ready(): #on_ready -> when the bot is ready -> ready state
+#    await client.change_presence(activity = discord.Game('Standing by...'))
+#    print('Bot Ready! Proceeding with simulation.')
+#    await ctx.send('Proceeding with the Adventure!')
+
+events = ['potion', 'item', 'injury', 'fight']
+potion_text = ['potion!1','potion!2', 'potion!3', 'potion!4']
+item_text = ['item!1', 'item!2', 'item!3']
+injury_text = ['injury!1', 'injury!2', 'injury!3']
+fight_text = ['fight!1', 'fight!2', 'fight!3',]
+
+
+
+def main():
+    day = 0
+    player1 = Player()
+    player2 = Player()
+    players = [player1, player2]
+    print('Created with permission from ')
+    print('Starting simulation')
+    while len(players) > 0:
+        day = day + 1
+        print(f'Day {day}')
+        players = day_loop(players)
+    print('Game over')
+
+def day_loop(players):
+    event_counter = 0
+    event_freq = random.choice(range(1,3,1))
+    while event_counter != event_freq and len(players) > 0:
+        print(players)
+        #choosing active player
+        active_team = random.choice(players)
+        #selecting the event
+        event = random.choice(events)
+        #running the event 
+        active_team = event_dic[event](active_team)
+        #clearing bodies
+        for player in players:
+            if player.gethp() <= 0:
+                players.remove(player)
+        event_counter += 1
+        print(players)
+        print('Day over!')
+        return players
+
+#nonlethal events
+def potion(players):
+    player = random.choice(players)
+    print(random.choice(potion_text))
+    qty = random.choice(list(range(1,10,1)))
+    print(qty)
+    player.updatehp(qty)
+    print('Applied potion')
+    return player
+
+def item(player):
+    player = random.choice(players)
+    print(random.choice(item_text))
+    qty = random.choice(list(range(-10,10,1)))
+    print(qty)
+    player.updatepwr(qty)
+    print('Applied item')
+    return player
+
+def injury(player):
+    player = random.choice(players)
+    print(random.choice(injury_text))
+    qty = random.choice(list(range(-10,-1,1)))
+    print(qty)
+    player.updatehp(qty)
+    print('Applied injury')
+    if player.gethp() <= 0:
+        print('Player dies!') 
+    return player
+
+
+#possibly lethal events 
+def fight(player):
+    first_loop = True
+    player_1 = Player
+    player_2 = player_1
+    while player_1 == player_2 and first_loop = True:
+        player_1 = random.choice(players)
+        player_2 = random.choice(players)
+        first_loop = False
+    player_1_status = False
+    player_2_status = False
+    print(player_1)
+    print(player_2)
+    #fight between player 1 and player 2
+    print(random.choice(fight_text))
+    pwr_levels = {player.pwr: player for player in players}
+    victor = max.pwr_level()
+    
+    
+    print('Applied fight')
+    #add player_2_status
+    if player_1_status == True:
+        print('Tie')
+    elif player.gethp() <= 0:
+        print('Player dies!') 
+    return player
+
+
+#lethal events
+def execute(player):
+    player.updatehp(- player.gethp())
+    print('Player dies!') 
+
+#def encounter():
+    #something happens, if even a happens then event b MIGHT happen
+
+event_dic = {'potion': potion, 'item' : item, 'injury' : injury, 'fight': fight}
+
+class Player: 
+    def __init__(self):
+        self.pwr = 0
+        self.hp = 10
+        self.item = False
+        self.exhausted = False
+
+    def updatehp(self, stat_update):
+        self.hp = self.hp + stat_update
+    
+    def restorehp(self):
+        if self.hp <= 0:
+            self.hp = 1
+    
+    def gethp(self):
+        return self.hp
+    
+    def updatepwr(self, stat_update):
+        self.pwr == self.pwr + stat_update
+
+    def getpwr(self):
+        return self.pwr
+    
+    def fighthp(self, enemy_pwr):
+        if enemy_pwr > self.pwr:
+            self.hp += (self.pwr - enemy_pwr)
+        if enemy_pwr == self.pwr:
+            tie_fight = True
+            return tie_fight
+        
+    
+
+main()
+
+
+    
+
+    
+
+    
+
+
+
